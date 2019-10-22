@@ -1,33 +1,25 @@
-function getWaterCount(array) {
+function getWaterCount(generalArray) {
     let result = 0;
-    let current = 0;
-    let tempArray = [];
-    for (let i = current; i < array.length; i++) {
-        if (i !== 0 && array[i] >= array[current]) {
-            let generalCount = array[current] * tempArray.length;
-            let tempArrayCount = tempArray.reduce((first, next) => first + next);
-            result += generalCount - tempArrayCount;
-            tempArray = [];
-            array = array.slice(i);
-            i = -1;
-        } else {
-            tempArray.push(array[i]);
+    let subArray = getResult(generalArray);
+    let reversedArray = subArray.reverse();
+    getResult(reversedArray);
+    function getResult(generalArray){
+        let array = generalArray;
+        let current = 0;
+        let tempArray = [];
+        for (let i = current; i < array.length; i++) {
+            if (i !== 0 && array[i] >= array[current]) {
+                let generalCount = array[current] * tempArray.length;
+                let tempArrayCount = tempArray.reduce((first, next) => first + next);
+                result += generalCount - tempArrayCount;
+                tempArray = [];
+                array = array.slice(i);
+                i = -1;
+            } else {
+                tempArray.push(array[i]);
+            }
         }
-    }
-    let reversedArray = array.reverse();
-    current = 0;
-    tempArray = [];
-    for (let i = current; i < reversedArray.length; i++) {
-        if (i !== 0 && reversedArray[i] >= reversedArray[current]) {
-            let generalCount = reversedArray[current] * tempArray.length;
-            let tempArrayCount = tempArray.reduce((first, next) => first + next);
-            result += generalCount - tempArrayCount;
-            tempArray = [];
-            reversedArray = reversedArray.slice(i);
-            i = -1;
-        } else {
-            tempArray.push(reversedArray[i]);
-        }
+        return array;
     }
     console.log('result', result);
 }
