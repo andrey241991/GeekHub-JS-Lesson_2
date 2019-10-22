@@ -10,7 +10,6 @@
                 tempArray = [];
                 array = array.slice(i);
                 i = -1;
-                console.log('array', array);
             } else {
                 tempArray.push(array[i]);
             }
