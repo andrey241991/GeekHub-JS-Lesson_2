@@ -1,9 +1,4 @@
-function getWaterCount(generalArray) {
-    let result = 0;
-    let subArray = getResult(generalArray);
-    let reversedArray = subArray.reverse();
-    getResult(reversedArray);
-    function getResult(generalArray){
+   const getWaterCount = (generalArray) => {
         let array = generalArray;
         let current = 0;
         let tempArray = [];
@@ -15,17 +10,19 @@ function getWaterCount(generalArray) {
                 tempArray = [];
                 array = array.slice(i);
                 i = -1;
+                console.log('array', array);
             } else {
                 tempArray.push(array[i]);
             }
         }
-        return array;
+        if(array.length <= 1){return}
+        getWaterCount(array.reverse());
     }
-    console.log('result', result);
-}
 
-// let array = [2,1,5,0,3,4,7,2,3,1];//10
+let array = [2,1,5,0,3,4,7,2,3,1];//10
 // let array = [2,1,5,0,3,4,7,2,3,1,6,1]; //21
 // let array = [2,1,5,0,3,4,7,2,3,1,3]; //12
-let array = [7, 0, 2, 8, 3, 4, 7, 2, 4, 8, 0, 11, 0, 0, 0, 3]; //49
+// let array = [7, 0, 2, 8, 3, 4, 7, 2, 4, 8, 0, 11, 0, 0, 0, 3]; //49
+let result = 0;
 getWaterCount(array);
+console.log('result', result);
