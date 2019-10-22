@@ -1,43 +1,39 @@
-function getWaterCount (array) {
+function getWaterCount(array) {
     let result = 0;
     let current = 0;
     let tempArray = [];
-    let slicedArray = [];
-    for(let i = 0; i<array.length; i++){
-        slicedArray = array.slice(i);
-        let isBuggerThenI = slicedArray.some(elem => elem >= array[current]);
-        if(isBuggerThenI){
-                if(i!== 0 && array[i] >= array[current]){
-                    let generalCount = array[current] * tempArray.length;
-                    let tempArrayCount = tempArray.reduce((first, next) => first + next);
-                    result += generalCount - tempArrayCount;
-                    tempArray = [];
-                    current = i;
-                }else{
-                    tempArray.push(array[i]);
-                }
-        }else{
-            current = 0;
-            for(let i = current; i < slicedArray.length; i++){
-                let biggestNumberIndex = 0;
-                let biggestNumber = Math.max(...slicedArray);
-                for(let i = 0; i< slicedArray.length; i++){
-                    if(slicedArray[i] === biggestNumber){
-                        biggestNumberIndex = i;
-                        break;
-                    }
-                    tempArray.push(slicedArray[i]);
-                }
-                if(tempArray.length === 0){
-                    return result;
-                }
-                let generalCount = biggestNumber * tempArray.length;
-                let tempArrayCount = tempArray.reduce((first, next) => first + next);
-                result += generalCount - tempArrayCount;
-                current = biggestNumberIndex;
-                tempArray = [];
-                slicedArray = slicedArray.slice(biggestNumberIndex);
-            }
+    for (let i = current; i < array.length; i++) {
+        if (i !== 0 && array[i] >= array[current]) {
+            let generalCount = array[current] * tempArray.length;
+            let tempArrayCount = tempArray.reduce((first, next) => first + next);
+            result += generalCount - tempArrayCount;
+            tempArray = [];
+            array = array.slice(i);
+            i = -1;
+        } else {
+            tempArray.push(array[i]);
         }
     }
+    let reversedArray = array.reverse();
+    current = 0;
+    tempArray = [];
+    for (let i = current; i < reversedArray.length; i++) {
+        if (i !== 0 && reversedArray[i] >= reversedArray[current]) {
+            let generalCount = reversedArray[current] * tempArray.length;
+            let tempArrayCount = tempArray.reduce((first, next) => first + next);
+            result += generalCount - tempArrayCount;
+            tempArray = [];
+            reversedArray = reversedArray.slice(i);
+            i = -1;
+        } else {
+            tempArray.push(reversedArray[i]);
+        }
+    }
+    console.log('result', result);
 }
+
+// let array = [2,1,5,0,3,4,7,2,3,1];//10
+// let array = [2,1,5,0,3,4,7,2,3,1,6,1]; //21
+// let array = [2,1,5,0,3,4,7,2,3,1,3]; //12
+let array = [7, 0, 2, 8, 3, 4, 7, 2, 4, 8, 0, 11, 0, 0, 0, 3]; //49
+getWaterCount(array);
